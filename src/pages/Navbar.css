@@ -1,0 +1,60 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 80px; /* Wide padding like your screenshot */
+    background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .navbar-brand {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c3e50;
+    cursor: pointer;
+  }
+  
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 35px; /* Spacing between links */
+  }
+  
+  .navbar-links a, .nav-link-item {
+    text-decoration: none;
+    color: #555;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .navbar-links a:hover, .nav-link-item:hover {
+    color: #000;
+  }
+  
+  .navbar-logout-btn {
+    background-color: #f14d4d; /* Red like your screenshot */
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .navbar-login-btn {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .navbar-logout-btn:hover {
+    background-color: #d43f3f;
+  }

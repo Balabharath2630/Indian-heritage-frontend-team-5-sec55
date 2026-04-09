@@ -7,21 +7,58 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // This handles the "Sign in" button click
-  const handleSignIn = (e) => {
+  // ✅ SINGLE CLEAN FUNCTION (FIXED)
+  const handleSignIn = async (e) => {
     e.preventDefault();
     
-    if (email && password) {
-      alert(`Logging in as: ${email}`);
-      // In a real app, you'd check credentials here.
-      // For now, we just redirect to the dashboard.
-      navigate("/dashboard"); 
-    } else {
+    if (!email || !password) {
       alert("Please enter both email and password.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        const loggedInUser = data.user;
+
+        // ✅ Normalize role
+        const role = (loggedInUser.role || "").toLowerCase();
+
+        // ✅ Store user + role
+        localStorage.setItem("user", JSON.stringify(loggedInUser));
+        localStorage.setItem("role", role);
+
+        alert(`Welcome back, ${loggedInUser.name}!`);
+
+        // ✅ ROLE-BASED REDIRECT (FINAL FIX)
+        if (role === "admin") {
+          navigate("/admin-dashboard");
+        } else if (role === "creator" || role === "content_creator") {
+          navigate("/creator-dashboard");
+        } else if (role === "guide") {
+          navigate("/guide-dashboard");
+        } else {
+          navigate("/user-dashboard");
+        }
+
+      } else {
+        alert(data.message || "Invalid email or password. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Could not connect to the server. Is your Spring Boot app running?");
     }
   };
 
-  // This handles the "Sign up" link click
   const handleSignUpRedirect = () => {
     navigate("/signup");
   };
@@ -42,19 +79,21 @@ function Login() {
               placeholder="you@example.com" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
           <div className="input-group">
             <div className="password-row">
               <label>Password</label>
-              <span className="forgot">Forgot password?</span>
+              <span className="forgot" style={{ cursor: "pointer" }}>Forgot password?</span>
             </div>
             <input 
               type="password" 
               placeholder="••••••••" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -69,7 +108,13 @@ function Login() {
         </form>
 
         <p className="signup">
-          Don't have an account? <span onClick={handleSignUpRedirect}>Sign up</span>
+          Don't have an account?{" "}
+          <span 
+            onClick={handleSignUpRedirect} 
+            style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+          >
+            Sign up
+          </span>
         </p>
       </div>
     </div>

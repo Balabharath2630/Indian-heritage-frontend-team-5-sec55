@@ -69,15 +69,14 @@ const monuments = [
   },
   {
     id: 7,
-    name: "Meenakshi Temple",
+    name: "Meenakshi Amman Temple",
     location: "Madurai, Tamil Nadu",
-    /* This is a verified direct link to the colorful gopurams of Madurai */
-    image: "https://images.unsplash.com/photo-1567411256852-876cce47c997?auto=format&fit=crop&w=800&q=80",
-    description: "Meenakshi Temple is a historic Hindu temple famous for its towering gopurams adorned with thousands of colorful sculptures. It is a masterpiece of Dravidian architecture and a vibrant spiritual center.",
-    rating: 4.8,
-    year: "17th Century",
+    image: "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=800&q=80",
+    description: "A historic Hindu temple complex known for its towering gopurams covered in colorful sculptures.",
+    rating: 4.7,
+    year: "1623",
     category: "Temple",
-    virtualTour: true
+    virtualTour: false
   },
   {
     id: 8,

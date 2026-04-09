@@ -9,6 +9,14 @@ function Dashboard() {
   return (
     <div className="dashboard-page">
 
+      {/* Back Button Added Here */}
+      <button
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ← Back
+      </button>
+
       {/* HEADER */}
       <div className="dashboard-header">
         <div>

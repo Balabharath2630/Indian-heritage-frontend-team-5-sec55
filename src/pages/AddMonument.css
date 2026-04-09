@@ -1,0 +1,88 @@
+/* AddMonument.css */
+.add-monument-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.add-monument-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.add-monument-header h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+input, textarea, select {
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+  border-color: #ff9933; /* Indian Saffron */
+  outline: none;
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.file-upload-section {
+  background: #fdf2e9;
+  padding: 20px;
+  border: 2px dashed #ff9933;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.publish-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #ff9933 0%, #138808 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.publish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(19, 136, 8, 0.3);
+}

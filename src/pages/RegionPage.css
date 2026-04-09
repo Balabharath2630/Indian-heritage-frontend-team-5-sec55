@@ -1,112 +1,67 @@
-/* ============================= */
-/* REGION PAGE WRAPPER */
-/* ============================= */
-
-.region-page-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 20px;
+.monuments-page {
+  padding: 60px;
+  background: #f4f0e6;
+  min-height: 100vh;
 }
 
-/* ============================= */
-/* TITLE */
-/* ============================= */
-
-.monuments-title {
+.monuments-page h1 {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
-  font-weight: 600;
+  margin-bottom: 40px;
+  font-size: 32px;
 }
 
-/* ============================= */
-/* GRID */
-/* ============================= */
-
-.monuments-grid {
+/* GRID FIX */
+.monument-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  align-items: start;
 }
 
-/* ============================= */
 /* CARD */
-/* ============================= */
-
 .monument-card {
-  background: white;
+  background: rgb(224, 216, 216);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .monument-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
 }
 
-/* ============================= */
-/* IMAGE */
-/* ============================= */
-
+/* IMAGE FIX */
 .monument-card img {
   width: 100%;
-  height: 160px;
-  object-fit: cover;
+  height: 200px;   /* adjust as needed */
+  object-fit: cover; /* keeps image ratio */
   display: block;
 }
 
-/* ============================= */
-/* INFO */
-/* ============================= */
-
-.monument-info {
-  padding: 15px;
+/* CONTENT */
+.monument-card h3 {
+  margin: 15px 15px 5px;
 }
 
-.monument-info h3 {
-  font-size: 1.1rem;
-  margin-bottom: 6px;
-}
-
-.monument-info p {
-  font-size: 0.9rem;
+.monument-card p {
+  margin: 0 15px 15px;
   color: #666;
-  margin-bottom: 10px;
 }
 
-/* ============================= */
-/* BUTTON */
-/* ============================= */
-
-.monument-info button {
-  background-color: #2b5a9e;
+.monument-card button {
+  margin: 0 15px 20px;
+  padding: 8px 14px;
+  background: #2e5aac;
   color: white;
   border: none;
-  padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background-color 0.3s ease;
 }
 
-.monument-info button:hover {
-  background-color: #1f4175;
-}
-
-/* ============================= */
-/* RESPONSIVE */
-/* ============================= */
-
-@media (max-width: 1024px) {
-  .monuments-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .monuments-grid {
-    grid-template-columns: 1fr;
-  }
+.monument-card button:hover {
+  background: #1d4ed8;
 }
