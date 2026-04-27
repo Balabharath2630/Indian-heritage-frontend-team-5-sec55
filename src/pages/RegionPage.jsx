@@ -21,13 +21,13 @@ function RegionPage() {
       setLoading(true);
       try {
         // ✅ Step 2: Try fetching with the Formatted Name first
-        let response = await fetch(`http://localhost:8080/api/monuments/region/${formattedRegion}`);
+        let response = await fetch(`https://your-app-name.up.railway.app/api/monuments/region/${formattedRegion}`);
         let data = await response.json();
 
         // ✅ Step 3: Fallback logic
         // If "North" returns nothing, try fetching with lowercase "north"
         if (data.length === 0) {
-          const lowerResponse = await fetch(`http://localhost:8080/api/monuments/region/${regionId.toLowerCase()}`);
+          const lowerResponse = await fetch(`https://your-app-name.up.railway.app/api/monuments/region/${regionId.toLowerCase()}`);
           data = await lowerResponse.json();
         }
 

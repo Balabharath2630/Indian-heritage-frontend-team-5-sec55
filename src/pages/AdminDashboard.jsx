@@ -15,7 +15,7 @@ function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/auth/users");
+      const response = await fetch("https://your-app-name.up.railway.app/api/auth/users");
       const data = await response.json();
       setUsers(data);
       setLoading(false);
@@ -28,7 +28,7 @@ function AdminDashboard() {
   const handleDelete = async (userId) => {
     if (window.confirm("⚠️ Are you sure you want to remove this user? This action cannot be undone.")) {
       try {
-        const response = await fetch(`http://localhost:8080/api/auth/users/${userId}`, {
+        const response = await fetch(`https://your-app-name.up.railway.app/api/auth/users/${userId}`, {
           method: "DELETE",
         });
 

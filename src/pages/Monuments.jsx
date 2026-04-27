@@ -8,7 +8,7 @@ function Monuments() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/monuments")
+    fetch("https://your-app-name.up.railway.app/api/monuments")
       .then((response) => {
         // If server returns 500, 404, etc., don't try to parse it as JSON
         if (!response.ok) {
