@@ -1,150 +1,9 @@
+/* --- Monuments Page Layout --- */
 .monuments-page {
-    padding: 60px;
-    background: #f4f0e6;
-    min-height: 100vh;
-    position: relative; /* container for absolute back button */
-  }
-  
-  .monuments-page h1 {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 32px;
-  }
-  
-  /* GRID FIX */
-  .monument-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    align-items: start;
-  }
-  
-  /* CARD */
-  .monument-card {
-    background: rgb(224, 216, 216);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .monument-card:hover {
-    transform: translateY(-8px);
-  }
-  
-  /* IMAGE FIX */
-  .monument-card img {
-    width: 100%;
-    height: 200px;   /* adjust as needed */
-    object-fit: cover; /* keeps image ratio */
-    display: block;
-  }
-  
-  /* CONTENT */
-  .monument-card h3 {
-    margin: 15px 15px 5px;
-  }
-  
-  .monument-card p {
-    margin: 0 15px 15px;
-    color: #666;
-  }
-  
-  .monument-card button {
-    margin: 0 15px 20px;
-    padding: 8px 14px;
-    background: #2e5aac;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .monument-card button:hover {
-    background: #1d4ed8;
-  }
-
-  /* Stronger selector to avoid overrides */
-  .monuments-page .back-button {
-    appearance: none;
-    -webkit-appearance: none;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: rgba(0,0,0,0.06);
-    color: #111;
-    padding: 8px 14px;
-    border-radius: 999px; /* oval shape */
-    cursor: pointer;
-    font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    position: absolute;
-    left: 16px;
-    top: 16px;
-    z-index: 60;
-
-    transition: transform 180ms ease, color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
-    transform-origin: center;
-    will-change: transform, color, background-color;
-  }
-
-  /* hover/focus: blue text and subtle blue tint */
-  .monuments-page .back-button:hover,
-  .monuments-page .back-button:focus {
-    transform: scale(1.06);
-    color: #1e90ff; /* blue text on hover */
-    background-color: rgba(30,144,255,0.06); /* slight blue tint */
-    box-shadow: 0 6px 18px rgba(30,144,255,0.08);
-    outline: none;
-  }
-
-  /* active press */
-  .monuments-page .back-button:active {
-    transform: scale(0.98);
-  }
-
-  /* keyboard focus visible */
-  .monuments-page .back-button:focus-visible {
-    box-shadow: 0 0 0 4px rgba(30,144,255,0.12);
-  }
-
-  /* fallback: ensure text color doesn't get overridden by parent rules */
-  .monuments-page .back-button,
-  .monuments-page .back-button * {
-    color: inherit;
-  }
-  /* Monuments.css */
-.monuments-page {
-  padding: 20px 5%;
-  background-color: #fdfdfd;
+  padding: 60px 5%;
+  background: #f4f0e6; /* Beige background from original design */
   min-height: 100vh;
-}
-
-/* Ensure the back button stays visible and clickable */
-.top-nav-bar {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.back-button {
-  background-color: #2c3e50; /* Dark color so it's not invisible */
-  color: white !important;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10; /* Keep it above other elements */
-}
-
-.back-button:hover {
-  background-color: #ff9933; /* Indian Saffron on hover */
-  transform: translateX(-5px);
+  position: relative; /* Container for the absolute back button */
 }
 
 .page-header {
@@ -153,47 +12,119 @@
 }
 
 .page-header h1 {
-  font-size: 2.5rem;
+  font-size: 32px;
   color: #1a1a1a;
+  margin: 0;
 }
 
-/* Grid Styling */
+/* --- ✅ Vibrant Blue Back Button --- */
+.monuments-page .back-button {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: #1a73e8; /* Vibrant Blue */
+  color: white !important; /* Ensure text stays white */
+  padding: 10px 24px;
+  border-radius: 12px; /* Rounded square look */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  
+  /* Absolute Positioning */
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 60;
+
+  /* Effects */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.monuments-page .back-button:hover,
+.monuments-page .back-button:focus {
+  transform: scale(1.05);
+  background-color: #1557b0; /* Darker blue */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  outline: none;
+  color: white !important;
+}
+
+.monuments-page .back-button:active {
+  transform: scale(0.96);
+}
+
+/* Fallback to force white text inside button */
+.monuments-page .back-button, 
+.monuments-page .back-button * {
+  color: white !important;
+}
+
+/* --- Monument Grid Fix --- */
 .monument-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
+  align-items: start;
 }
 
+/* --- Monument Card Styling --- */
 .monument-card {
   background: white;
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
   transition: transform 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .monument-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
 }
 
-.image-container img {
+/* Image Container */
+.monument-card .image-container img,
+.monument-card img {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  display: block;
 }
 
+/* Card Content Details */
 .card-content {
   padding: 20px;
 }
 
+.monument-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+}
+
+.monument-card p {
+  margin: 0 0 15px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* --- Action Button (Details) --- */
 .details-btn {
   width: 100%;
-  margin-top: 15px;
   padding: 10px;
-  background-color: #3498db;
+  background-color: #2e5aac;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.details-btn:hover {
+  background-color: #1d4ed8;
 }

@@ -8,8 +8,79 @@ function Signup() {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [adminKey, setAdminKey] = useState(""); // ✅ Added state for Secret Key
+  const [adminKey, setAdminKey] = useState("");
+  const [strength, setStrength] = useState(""); 
+  
+  // ✅ New States for OTP
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [loadingOtp, setLoadingOtp] = useState(false);
+
   const navigate = useNavigate();
+
+  // Email Validation Logic
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  // Password Strength Logic
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+    if (value.length === 0) setStrength("");
+    else if (value.length < 6) setStrength("Weak");
+    else if (value.match(/[A-Z]/) && value.match(/[0-9]/) && value.match(/[^A-Za-z0-9]/)) {
+      setStrength("Strong");
+    } else {
+      setStrength("Medium");
+    }
+  };
+
+  // ✅ Step 1: Send OTP to Email
+  const sendOtp = async () => {
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email first.");
+      return;
+    }
+    setLoadingOtp(true);
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (response.ok) {
+        setIsOtpSent(true);
+        alert("OTP sent to your email!");
+      } else {
+        alert("Failed to send OTP. Try again.");
+      }
+    } catch (error) {
+      alert("Error connecting to server.");
+    } finally {
+      setLoadingOtp(false);
+    }
+  };
+
+  // ✅ Step 2: Verify the OTP
+  const verifyOtp = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
+      });
+      const data = await response.json();
+      if (data.status === "success") {
+        setIsVerified(true);
+        alert("Email Verified Successfully!");
+      } else {
+        alert("Invalid OTP code.");
+      }
+    } catch (error) {
+      alert("Verification error.");
+    }
+  };
 
   const mapRoleToEnum = (selectedRole) => {
     switch (selectedRole) {
@@ -24,43 +95,45 @@ function Signup() {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
+    if (!isVerified) {
+      alert("Please verify your email with OTP first!");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
-    if (!role) {
-      alert("Please select a role.");
+    if (strength === "Weak") {
+      alert("Password is too weak. Please use numbers and special characters.");
       return;
     }
 
     const userData = {
-      name: name,
-      email: email,
-      password: password,
+      name,
+      email,
+      password,
       role: mapRoleToEnum(role),
-      adminKey: adminKey // ✅ Sending the key to the backend
+      adminKey
     };
 
     try {
       const response = await fetch("http://localhost:8080/api/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
       if (response.ok) {
-        alert(`Account created successfully for ${email}!`);
+        alert(`Account created successfully!`);
         navigate("/login");
       } else {
         const errorData = await response.text();
         alert("Signup failed: " + errorData);
       }
     } catch (error) {
-      console.error("Signup Error:", error);
-      alert("Server is not responding. Is Spring Boot running?");
+      alert("Server error.");
     }
   };
 
@@ -84,14 +157,53 @@ function Signup() {
 
           <div className="input-group">
             <label>Email</label>
-            <input 
-              type="email" 
-              placeholder="you@example.com" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <div style={{ display: "flex", gap: "10px" }}>
+              <input 
+                type="email" 
+                placeholder="you@example.com" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isVerified}
+                style={{ flex: 1, borderColor: email && !isValidEmail(email) ? "red" : "" }}
+              />
+              {!isVerified && (
+                <button 
+                  type="button" 
+                  onClick={sendOtp} 
+                  disabled={loadingOtp}
+                  style={{ padding: "0 15px", borderRadius: "5px", background: "#ff9933", color: "white", border: "none", cursor: "pointer" }}
+                >
+                  {loadingOtp ? "..." : isOtpSent ? "Resend" : "Get OTP"}
+                </button>
+              )}
+            </div>
+            {isVerified && <small style={{ color: "green" }}>✓ Email Verified</small>}
           </div>
+
+          {/* ✅ OTP Input Field - Only shows after clicking Get OTP */}
+          {isOtpSent && !isVerified && (
+            <div className="input-group" style={{ background: "#f9f9f9", padding: "10px", borderRadius: "8px", border: "1px dashed #ccc" }}>
+              <label>Enter 6-Digit OTP</label>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <input 
+                  type="text" 
+                  placeholder="000000" 
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  maxLength="6"
+                  style={{ textAlign: "center", letterSpacing: "5px", fontWeight: "bold" }}
+                />
+                <button 
+                  type="button" 
+                  onClick={verifyOtp}
+                  style={{ padding: "0 15px", borderRadius: "5px", background: "#1a73e8", color: "white", border: "none", cursor: "pointer" }}
+                >
+                  Verify
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="input-group">
             <label>Select Role</label>
@@ -109,13 +221,12 @@ function Signup() {
             </select>
           </div>
 
-          {/* ✅ CONDITIONAL ADMIN KEY INPUT: Only shows when Admin is selected */}
           {role === "Admin" && (
             <div className="input-group admin-key-section">
               <label style={{ color: "#ff9933", fontWeight: "bold" }}>Admin Secret Passcode</label>
               <input 
                 type="password" 
-                placeholder="Enter master key to prove you're an Admin" 
+                placeholder="Enter master key" 
                 value={adminKey}
                 onChange={(e) => setAdminKey(e.target.value)}
                 required
@@ -129,9 +240,16 @@ function Signup() {
               type="password" 
               placeholder="••••••••" 
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => handlePasswordChange(e.target.value)}
               required
             />
+            {strength && (
+              <div className={`strength-indicator ${strength.toLowerCase()}`} style={{
+                fontSize: "12px", marginTop: "5px", color: strength === "Strong" ? "green" : strength === "Medium" ? "orange" : "red"
+              }}>
+                Strength: <strong>{strength}</strong>
+              </div>
+            )}
           </div>
 
           <div className="input-group">
@@ -145,8 +263,13 @@ function Signup() {
             />
           </div>
 
-          <button type="submit" className="form-login-btn">
-            Sign up
+          <button 
+            type="submit" 
+            className="form-login-btn" 
+            disabled={!isVerified}
+            style={{ opacity: isVerified ? 1 : 0.6, cursor: isVerified ? "pointer" : "not-allowed" }}
+          >
+            {isVerified ? "Complete Registration" : "Verify Email to Sign Up"}
           </button>
         </form>
 

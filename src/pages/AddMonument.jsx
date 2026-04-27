@@ -10,8 +10,9 @@ function AddMonument() {
   const [formData, setFormData] = useState({
     name: "",
     location: "",
-    region: "North", // Simplified to match Home.jsx logic
-    description: ""
+    region: "North",
+    description: "",
+    tourUrl: "" // ✅ Added tourUrl to the initial state
   });
 
   const handleChange = (e) => {
@@ -38,7 +39,7 @@ function AddMonument() {
       if (!presignedResponse.ok) throw new Error("Could not get S3 permission.");
       const uploadUrl = await presignedResponse.text();
 
-      // --- STEP 2: Upload Directly to S3 (Bypasses Vercel/Backend Limits) ---
+      // --- STEP 2: Upload Directly to S3 ---
       const s3Response = await fetch(uploadUrl, {
         method: "PUT",
         body: imageFile,
@@ -50,9 +51,8 @@ function AddMonument() {
       // --- STEP 3: Save Monument Details to MySQL ---
       const finalImageUrl = `https://incredible-india-assets.s3.amazonaws.com/${fileName}`;
       
-      // We send this as a simple POST with JSON now
       const monumentData = {
-        ...formData,
+        ...formData, // ✅ This now automatically includes tourUrl
         imageUrl: finalImageUrl
       };
 
@@ -81,7 +81,7 @@ function AddMonument() {
     <div className="add-monument-container">
       <div className="add-monument-header">
         <h2>✨ Add New Heritage Site</h2>
-        <p>Showcase India's glory with high-resolution imagery.</p>
+        <p>Showcase India's glory with high-resolution imagery and virtual tours.</p>
       </div>
   
       <form className="form-grid" onSubmit={handleSubmit}>
@@ -99,7 +99,6 @@ function AddMonument() {
   
         <div className="form-group">
           <label>Region</label>
-          {/* ✅ Updated values to match your Home.jsx cards for perfect filtering */}
           <select name="region" value={formData.region} onChange={handleChange}>
             <option value="North">North India</option>
             <option value="South">South India</option>
@@ -118,6 +117,21 @@ function AddMonument() {
             onChange={handleChange} 
             required
           />
+        </div>
+
+        {/* ✅ NEW: Virtual Tour Input Field */}
+        <div className="form-group full-width">
+          <label>Virtual Tour (Google Maps Embed URL)</label>
+          <input 
+            type="text" 
+            name="tourUrl"
+            placeholder="Paste only the https:// link from the Google Maps iframe src..." 
+            value={formData.tourUrl}
+            onChange={handleChange} 
+          />
+          <p style={{fontSize: '0.8rem', color: '#666', marginTop: '5px'}}>
+            Go to Google Maps → Share → Embed Map → Copy the link in 'src'
+          </p>
         </div>
   
         <div className="form-group full-width">

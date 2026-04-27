@@ -41,7 +41,7 @@ function Monuments() {
     <div className="monuments-page">
       <div className="top-nav-bar">
         <button className="back-button" onClick={() => navigate("/")}>
-          ← Back to Home
+          ← Back
         </button>
       </div>
 

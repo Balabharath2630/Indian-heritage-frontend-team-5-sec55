@@ -7,10 +7,19 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // ✅ SINGLE CLEAN FUNCTION (FIXED)
+  // Simple Email Check
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSignIn = async (e) => {
     e.preventDefault();
     
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email format.");
+      return;
+    }
+
     if (!email || !password) {
       alert("Please enter both email and password.");
       return;
@@ -29,17 +38,13 @@ function Login() {
 
       if (response.ok && data.status === "success") {
         const loggedInUser = data.user;
-
-        // ✅ Normalize role
         const role = (loggedInUser.role || "").toLowerCase();
 
-        // ✅ Store user + role
         localStorage.setItem("user", JSON.stringify(loggedInUser));
         localStorage.setItem("role", role);
 
         alert(`Welcome back, ${loggedInUser.name}!`);
 
-        // ✅ ROLE-BASED REDIRECT (FINAL FIX)
         if (role === "admin") {
           navigate("/admin-dashboard");
         } else if (role === "creator" || role === "content_creator") {

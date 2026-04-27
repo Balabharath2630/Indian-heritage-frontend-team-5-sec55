@@ -7,6 +7,9 @@ function MonumentDetails() {
   const navigate = useNavigate();
   const [monument, setMonument] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  // ✅ State for the Virtual Tour Modal
+  const [isTourOpen, setIsTourOpen] = useState(false);
 
   useEffect(() => {
     // Fetching the specific monument by ID from your Java Backend
@@ -25,16 +28,17 @@ function MonumentDetails() {
   if (loading) return <div className="loader">Loading History...</div>;
   if (!monument) return <div className="error">Monument not found.</div>;
 
+  // ✅ Uses the dynamic link from DB
+  const tourUrl = monument.tourUrl;
+
   return (
     <div className="details-container">
       <button className="back-link" onClick={() => navigate(-1)}>← Back to Explorer</button>
       
-      {/* IMAGE FIRST - BIG AND BOLD */}
       <div className="details-hero">
         <img src={monument.imageUrl} alt={monument.name} />
       </div>
 
-      {/* INFO SECOND - NAME, LOCATION, DESCRIPTION */}
       <div className="details-info">
         <span className="region-tag">{monument.region} India</span>
         <h1>{monument.name}</h1>
@@ -47,10 +51,39 @@ function MonumentDetails() {
           <p>{monument.description}</p>
         </div>
 
-        <button className="book-btn" onClick={() => alert("Virtual Tour Coming Soon!")}>
-          Take a Virtual Tour
-        </button>
+        {/* ✅ Only show button if a tour URL exists */}
+        {tourUrl && (
+          <button className="book-btn" onClick={() => setIsTourOpen(true)}>
+            Take a Virtual Tour
+          </button>
+        )}
       </div>
+
+      {/* ✅ CINEMATIC VIRTUAL TOUR MODAL */}
+      {isTourOpen && (
+        <div className="tour-modal-overlay">
+          <div className="tour-modal-content">
+            <div className="tour-modal-header">
+              <h3>360° Virtual Exploration: {monument.name}</h3>
+              <button className="close-tour-btn" onClick={() => setIsTourOpen(false)}>×</button>
+            </div>
+            
+            <div className="tour-iframe-container">
+              <iframe
+                title="Virtual Tour"
+                src={tourUrl}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            
+            <div className="tour-footer">
+              <p>Tip: Click and drag to look around. Use arrows to move through the grounds.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
