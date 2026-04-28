@@ -36,7 +36,7 @@ function Forum() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/posts");
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/posts");
       const data = await response.json();
       setPosts(data.sort((a, b) => b.id - a.id));
       setLoading(false);
@@ -48,7 +48,7 @@ function Forum() {
 
   const fetchMonuments = async () => {
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/monuments");
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments");
       const data = await response.json();
       setMonuments(data);
     } catch (error) {
@@ -66,7 +66,7 @@ function Forum() {
     };
 
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/posts", {
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPost),
@@ -85,7 +85,7 @@ function Forum() {
 
   const handleLikePost = async (postId) => {
     try {
-      await fetch(`https://indian-heritage-backend-production.up.railway.app/api/posts/${postId}/like`, { method: "PUT" });
+      await fetch(`https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/posts/${postId}/like`, { method: "PUT" });
       fetchPosts(); 
     } catch (error) {
       console.error("Like failed");
@@ -103,7 +103,7 @@ function Forum() {
     };
 
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/comments", {
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newComment),

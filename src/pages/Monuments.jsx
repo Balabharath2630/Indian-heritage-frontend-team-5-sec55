@@ -8,7 +8,7 @@ function Monuments() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://indian-heritage-backend-production.up.railway.app/api/monuments")
+    fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments")
       .then((response) => {
         // If server returns 500, 404, etc., don't try to parse it as JSON
         if (!response.ok) {

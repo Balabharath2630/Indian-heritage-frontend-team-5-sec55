@@ -15,7 +15,7 @@ function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/auth/users");
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/auth/users");
       const data = await response.json();
       setUsers(data);
       setLoading(false);
@@ -28,7 +28,7 @@ function AdminDashboard() {
   const handleDelete = async (userId) => {
     if (window.confirm("⚠️ Are you sure you want to remove this user? This action cannot be undone.")) {
       try {
-        const response = await fetch(`https://indian-heritage-backend-production.up.railway.app/api/auth/users/${userId}`, {
+        const response = await fetch(`https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/auth/users/${userId}`, {
           method: "DELETE",
         });
 

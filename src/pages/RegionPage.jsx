@@ -21,13 +21,13 @@ function RegionPage() {
       setLoading(true);
       try {
         // ✅ Step 2: Try fetching with the Formatted Name first
-        let response = await fetch(`https://indian-heritage-backend-production.up.railway.app/api/monuments/region/${formattedRegion}`);
+        let response = await fetch(`https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments/region/${formattedRegion}`);
         let data = await response.json();
 
         // ✅ Step 3: Fallback logic
         // If "North" returns nothing, try fetching with lowercase "north"
         if (data.length === 0) {
-          const lowerResponse = await fetch(`https://indian-heritage-backend-production.up.railway.app/api/monuments/region/${regionId.toLowerCase()}`);
+          const lowerResponse = await fetch(`https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments/region/${regionId.toLowerCase()}`);
           data = await lowerResponse.json();
         }
 

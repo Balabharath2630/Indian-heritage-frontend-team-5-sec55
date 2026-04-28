@@ -33,7 +33,7 @@ function AddMonument() {
       // --- STEP 1: Get Presigned URL from Backend ---
       const fileName = `${Date.now()}_${imageFile.name.replace(/\s+/g, '_')}`;
       const presignedResponse = await fetch(
-        `https://indian-heritage-backend-production.up.railway.app/api/monuments/generate-presigned-url?fileName=${fileName}`
+        `https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments/generate-presigned-url?fileName=${fileName}`
       );
       
       if (!presignedResponse.ok) throw new Error("Could not get S3 permission.");
@@ -56,7 +56,7 @@ function AddMonument() {
         imageUrl: finalImageUrl
       };
 
-      const dbResponse = await fetch("https://indian-heritage-backend-production.up.railway.app/api/monuments/save-metadata", {
+      const dbResponse = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments/save-metadata", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(monumentData),

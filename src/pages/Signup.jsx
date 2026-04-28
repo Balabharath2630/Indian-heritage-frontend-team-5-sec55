@@ -44,7 +44,7 @@ function Signup() {
     }
     setLoadingOtp(true);
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/auth/send-otp", {
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -65,7 +65,7 @@ function Signup() {
   // ✅ Step 2: Verify the OTP
   const verifyOtp = async () => {
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/auth/verify-otp", {
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -119,7 +119,7 @@ function Signup() {
     };
 
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/auth/register", {
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),

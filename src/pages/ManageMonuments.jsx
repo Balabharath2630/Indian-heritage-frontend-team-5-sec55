@@ -12,7 +12,7 @@ function ManageMonuments() {
 
   const fetchMonuments = async () => {
     try {
-      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/monuments");
+      const response = await fetch("https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments");
       const data = await response.json();
       setMonuments(data);
       setLoading(false);
@@ -25,7 +25,7 @@ function ManageMonuments() {
   const handleDelete = async (id, name) => {
     if (window.confirm(`⚠️ Are you sure you want to delete "${name}"? This will remove it from the Cloud (S3) and Database forever!`)) {
       try {
-        const response = await fetch(`https://indian-heritage-backend-production.up.railway.app/api/monuments/${id}`, {
+        const response = await fetch(`https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/monuments/${id}`, {
           method: "DELETE",
         });
 
