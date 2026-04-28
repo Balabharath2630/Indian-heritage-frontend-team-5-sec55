@@ -7,6 +7,7 @@ import Navbar from "./pages/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword"; // ✅ ADDED
 import Forum from "./pages/Forum";
 import Monuments from "./pages/Monuments";
 import MonumentDetails from "./pages/MonumentDetails";
@@ -52,10 +53,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ ADDED */}
 
         {/* ================= FEATURE ROUTES ================= */}
         
-        {/* ✅ PROTECTED FORUM ROUTE: Redirects to login if not authenticated */}
+        {/* ✅ PROTECTED FORUM ROUTE */}
         <Route 
           path="/forum" 
           element={isAuthenticated ? <Forum /> : <Navigate to="/login" replace />} 
@@ -65,7 +67,7 @@ function App() {
         <Route path="/monuments/:id" element={<MonumentDetails />} />
         <Route path="/region/:regionId" element={<RegionPage />} />
 
-        {/* Route for the Add Monument Page */}
+        {/* Add Monument */}
         <Route path="/add-monument" element={<AddMonument />} />
 
         {/* ================= DASHBOARD ROUTES ================= */}
@@ -74,8 +76,6 @@ function App() {
         <Route path="/dashboard" element={<DashboardRedirect />} />
 
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        
-        {/* Route for the Admin to manage/delete monuments */}
         <Route path="/manage-monuments" element={<ManageMonuments />} />
 
         <Route path="/creator-dashboard" element={<CreatorDashboard />} />
