@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./ForgotPassword.css"; // ✅ ADDED
 
 export default function ForgotPassword() {
   const [step, setStep] = useState(1);
@@ -7,9 +8,7 @@ export default function ForgotPassword() {
   const [newPassword, setNewPassword] = useState("");
 
   const BASE_URL = "https://indian-heritage-backend-team-5-sec55-production.up.railway.app/api/auth";
-  // 👉 For local use: http://localhost:8080/api/auth
 
-  // Step 1: Send OTP
   const sendOtp = async () => {
     try {
       const res = await fetch(`${BASE_URL}/forgot-password`, {
@@ -27,7 +26,6 @@ export default function ForgotPassword() {
     }
   };
 
-  // Step 2: Verify OTP
   const verifyOtp = async () => {
     try {
       const res = await fetch(`${BASE_URL}/verify-otp`, {
@@ -45,7 +43,6 @@ export default function ForgotPassword() {
     }
   };
 
-  // Step 3: Reset Password
   const resetPassword = async () => {
     try {
       const res = await fetch(`${BASE_URL}/reset-password`, {
@@ -67,44 +64,58 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-      <h2>Forgot Password</h2>
+    <div className="forgot-container">
+      <div className="forgot-card">
+        <h2>Forgot Password</h2>
+        <p>Reset your password using OTP</p>
 
-      {step === 1 && (
-        <>
-          <input
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button onClick={sendOtp}>Send OTP</button>
-        </>
-      )}
+        {step === 1 && (
+          <>
+            <input
+              className="forgot-input"
+              type="email"
+              placeholder="Enter Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button className="forgot-btn" onClick={sendOtp}>
+              Send OTP
+            </button>
+          </>
+        )}
 
-      {step === 2 && (
-        <>
-          <input
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-          <button onClick={verifyOtp}>Verify OTP</button>
-        </>
-      )}
+        {step === 2 && (
+          <>
+            <p className="step-text">Enter OTP sent to your email</p>
+            <input
+              className="forgot-input"
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+            <button className="forgot-btn" onClick={verifyOtp}>
+              Verify OTP
+            </button>
+          </>
+        )}
 
-      {step === 3 && (
-        <>
-          <input
-            type="password"
-            placeholder="New Password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <button onClick={resetPassword}>Reset Password</button>
-        </>
-      )}
+        {step === 3 && (
+          <>
+            <p className="step-text">Enter new password</p>
+            <input
+              className="forgot-input"
+              type="password"
+              placeholder="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <button className="forgot-btn" onClick={resetPassword}>
+              Reset Password
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
