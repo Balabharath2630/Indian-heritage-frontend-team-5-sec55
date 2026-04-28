@@ -13,7 +13,7 @@ function MonumentDetails() {
 
   useEffect(() => {
     // Fetching the specific monument by ID from your Java Backend
-    fetch(`https://your-app-name.up.railway.app/api/monuments/${id}`)
+    fetch(`https://indian-heritage-backend-production.up.railway.app/api/monuments/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setMonument(data);

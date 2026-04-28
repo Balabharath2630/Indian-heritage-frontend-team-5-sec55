@@ -26,7 +26,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch("https://your-app-name.up.railway.app/api/auth/login", {
+      const response = await fetch("https://indian-heritage-backend-production.up.railway.app/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
