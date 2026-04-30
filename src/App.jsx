@@ -40,7 +40,7 @@ function DashboardRedirect() {
 }
 
 function App() {
-  // ✅ Check if user is logged in for protected routes
+  // ✅ Keep this (no change)
   const isAuthenticated = !!localStorage.getItem("user");
 
   return (
@@ -53,14 +53,16 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ ADDED */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* ================= FEATURE ROUTES ================= */}
         
-        {/* ✅ PROTECTED FORUM ROUTE */}
+        {/* ✅ FIXED FORUM ROUTE (dynamic check) */}
         <Route 
           path="/forum" 
-          element={isAuthenticated ? <Forum /> : <Navigate to="/login" replace />} 
+          element={
+            localStorage.getItem("user") ? <Forum /> : <Navigate to="/login" replace />
+          } 
         />
 
         <Route path="/monuments" element={<Monuments />} />

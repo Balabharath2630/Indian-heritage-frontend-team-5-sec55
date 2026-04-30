@@ -38,7 +38,16 @@ function Login() {
 
       if (response.ok && data.status === "success") {
         const loggedInUser = data.user;
-        const role = (loggedInUser.role || "").toLowerCase();
+
+        // ✅ FIXED ROLE MAPPING (ONLY CHANGE)
+        const roleMap = {
+          "ADMIN": "admin",
+          "CONTENT_CREATOR": "creator",
+          "TOUR_GUIDE": "guide",
+          "CULTURAL_ENTHUSIAST": "user"
+        };
+
+        const role = roleMap[loggedInUser.role] || "user";
 
         localStorage.setItem("user", JSON.stringify(loggedInUser));
         localStorage.setItem("role", role);
@@ -47,7 +56,7 @@ function Login() {
 
         if (role === "admin") {
           navigate("/admin-dashboard");
-        } else if (role === "creator" || role === "content_creator") {
+        } else if (role === "creator") {
           navigate("/creator-dashboard");
         } else if (role === "guide") {
           navigate("/guide-dashboard");
@@ -94,7 +103,7 @@ function Login() {
               <span 
                 className="forgot" 
                 style={{ cursor: "pointer" }}
-                onClick={() => navigate("/forgot-password")}  // ✅ ADDED
+                onClick={() => navigate("/forgot-password")}
               >
                 Forgot password?
               </span>
